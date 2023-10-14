@@ -1,0 +1,78 @@
+[gd_scene load_steps=6 format=3 uid="uid://bakj27ngmqg4c"]
+
+[ext_resource type="Texture2D" uid="uid://umfdj342031" path="res://assets/images/restart.png" id="1_3qgkx"]
+[ext_resource type="Script" path="res://src/game_over_screen.gd" id="1_jq5jb"]
+[ext_resource type="Texture2D" uid="uid://b4ldbgepb04hf" path="res://assets/images/exit.png" id="2_0jufw"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n1mmi"]
+texture = ExtResource("1_3qgkx")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ca3uu"]
+texture = ExtResource("2_0jufw")
+
+[node name="GameOverScreen" type="CanvasLayer"]
+script = ExtResource("1_jq5jb")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameOverText" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -46.0
+offset_top = 20.0
+offset_right = 46.0
+offset_bottom = 46.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "Game Over!"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -31.5
+offset_right = 80.0
+offset_bottom = 31.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_n1mmi")
+theme_override_styles/hover = SubResource("StyleBoxTexture_n1mmi")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_n1mmi")
+
+[node name="QuitButton" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -94.0
+offset_right = 80.0
+offset_bottom = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_ca3uu")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ca3uu")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ca3uu")
+
+[connection signal="pressed" from="Panel/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="Panel/QuitButton" to="." method="_on_quit_button_pressed"]

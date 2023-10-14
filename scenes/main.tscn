@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://cflwiuk5bfsqx"]
+
+[ext_resource type="Script" path="res://src/main.gd" id="1_2ryyy"]
+[ext_resource type="Texture2D" uid="uid://db3s4vot4ktr5" path="res://assets/images/bg.png" id="1_sr1d4"]
+[ext_resource type="PackedScene" uid="uid://2okcl3ofdgmu" path="res://scenes/bird.tscn" id="2_3eoau"]
+[ext_resource type="PackedScene" uid="uid://b00pymfjuxam5" path="res://scenes/pipe.tscn" id="2_rtow4"]
+[ext_resource type="PackedScene" uid="uid://dea2hisixnkee" path="res://scenes/ground.tscn" id="4_btuaw"]
+[ext_resource type="PackedScene" uid="uid://bakj27ngmqg4c" path="res://scenes/game_over_screen.tscn" id="6_0lch0"]
+[ext_resource type="AudioStream" uid="uid://boxyhw2fyw6qv" path="res://assets/music/Patreon Goal Reward Loops - Track 10 - Layer 03.wav" id="7_8e7ut"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_2ryyy")
+pipe_scene = ExtResource("2_rtow4")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(2.08165e-12, 2.08165e-12)
+texture = ExtResource("1_sr1d4")
+centered = false
+
+[node name="Bird" parent="." instance=ExtResource("2_3eoau")]
+
+[node name="Ground" parent="." instance=ExtResource("4_btuaw")]
+z_index = 1
+
+[node name="PipeTimer" type="Timer" parent="."]
+wait_time = 1.5
+
+[node name="ScoreLabel" type="Label" parent="."]
+z_index = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "0"
+
+[node name="GameOverScreen" parent="." instance=ExtResource("6_0lch0")]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_8e7ut")
+autoplay = true
+bus = &"Music"
+
+[connection signal="hit" from="Ground" to="." method="_on_ground_hit"]
+[connection signal="timeout" from="PipeTimer" to="." method="_on_pipe_timer_timeout"]
+[connection signal="exit_game" from="GameOverScreen" to="." method="_on_game_over_screen_exit_game"]
+[connection signal="restart_game" from="GameOverScreen" to="." method="_on_game_over_screen_restart_game"]
